@@ -114,7 +114,7 @@ export default class CaisseService extends ApiService {
   }
 
   getName() {
-    return "caisses";
+    return "operations";
   }
 
   async validatePrint(id: number | string) {
@@ -130,24 +130,24 @@ export default class CaisseService extends ApiService {
   getColumns() {
     const columns: ColumnDef<DefaultAppRowTypeInterface, any>[] = [
       {
-        accessorKey: "montant",
+        accessorKey: "Montant",
         header: "Montant",
       },
       {
-        accessorKey: "nom_destinataire",
+        accessorKey: "NomDestinataire",
         header: "Nom destinataire",
-        cell: cellMoney,
+        // cell: cellMoney,
       },
       {
-        accessorKey: "numero_cni_dest",
+        accessorKey: "NumeroCNIDestinataire",
         header: "Numero CNI Destinataire",
       },
       {
-        accessorKey: "nom_expediteur",
+        accessorKey: "NomExpediteur",
         header: "Nom expéditeur",
       },
       {
-        accessorKey: "numero_cni_exp",
+        accessorKey: "NumeroCNIExpediteur",
         header: "Numero CNI Expediteur",
       },
     ];
@@ -159,7 +159,7 @@ export default class CaisseService extends ApiService {
     const user = await this.getCurrentUser();
     const form: CustomFieldProps[] = [
       {
-        name: "montant",
+        name: "Montant",
         label: "Montant",
         type: "number",
         classparent: "",
@@ -167,7 +167,7 @@ export default class CaisseService extends ApiService {
         classlabel: "",
       }, 
       {
-        name: "nom_destinataire",
+        name: "NomDestinataire",
         label: "Nom destinataire",
         type: "text",
         classparent: "",
@@ -175,7 +175,7 @@ export default class CaisseService extends ApiService {
         classlabel: "",
       }, 
       {
-        name: "numero_cni_dest",
+        name: "NumeroCNIDestinataire",
         label: "Numero CNI Dest",
         type: "number",
         classparent: "",
@@ -183,7 +183,7 @@ export default class CaisseService extends ApiService {
         classlabel: "",
       }, 
       {
-        name: "nom_expediteur",
+        name: "NomExpediteur",
         label: "Nom expéditeur",
         type: "text",
         classparent: "",
@@ -191,13 +191,24 @@ export default class CaisseService extends ApiService {
         classlabel: "",
       }, 
       {
-        name: "numero_cni_exp",
+        name: "NumeroCNIExpediteur",
         label: "Numero CNI Exp",
         type: "number",
         classparent: "",
         customclass: "",
         classlabel: "",
-      },  
+      }, 
+      {
+        name: "id_user",
+        label: "Utlisateur",
+        type: "select",
+        options: [
+          { label: "User", value: 1 }
+        ],
+        classparent: "",
+        customclass: "",
+        classlabel: "",
+      }, 
     ];
 
     return form;

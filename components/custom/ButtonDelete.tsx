@@ -61,8 +61,6 @@ const ButtonDelete = <
     onSuccess: (data) => toast.success("Suppression réussie"),
   });
 
-  const caisseSerice = new CaisseService();
-  if (serviceName == caisseSerice.getName()) return <></>;
 
   return (
     <AlertDialog>

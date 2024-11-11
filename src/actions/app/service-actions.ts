@@ -1,20 +1,23 @@
 "use server";
-
 import { revalidatePath } from "next/cache";
 import { actionClient } from "../safe-actions";
 import { z } from "zod";
 import CaisseService from "@/src/services/app/caisse.service";
 import UserService from "@/src/services/app/user.service";
+import  OperationCaisseService  from '@/src/services/app/operationCaisse.service';
 type AsService =
 
   | UserService
-  | CaisseService;
+  | CaisseService
+  | OperationCaisseService;
 
 const getService = (name: string): AsService | null => {
   const services: Record<string, new () => AsService> = {
     users: UserService,
-    caisses: CaisseService,
+    operations: CaisseService,
+    OperationCaisses: OperationCaisseService,
   };
+  
 
   return services[name] ? new services[name]() : null;
 };
@@ -26,11 +29,14 @@ export async function createData(
   formData: FormData
 ) {
   try {
+    console.log(serviceName);
     const service = getService(serviceName);
+    console.log("Service Name Passed:", service);
+    console.log("okkkkk");
+    
     if (!service) return { message: "Service non trouvé", code: 400 };
 
     const body = Object.fromEntries(formData.entries());
-    console.log({body})
     const response = await service.create({ body });
     if (response.code === 200) revalidatePath(path ?? "");
     return response;

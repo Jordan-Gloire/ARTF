@@ -41,7 +41,7 @@ const DataTableRowActions = <
         form={form}
         tittle={props.tittle}
       />
-      <ButtonPrint<TData> row={row} serviceName={serviceName} />
+      {/* <ButtonPrint<TData> row={row} serviceName={serviceName} /> */}
       <ButtonDelete<TData>
         role={props.role}
         row={row}

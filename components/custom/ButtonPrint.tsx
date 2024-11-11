@@ -29,7 +29,8 @@ const ButtonPrint = <
   useParams<{ administrationId: string }>()?.administrationId ??
     "generate-recu-print";
   const caisseSerice = new CaisseService();
-  if (serviceName != caisseSerice.getName()) return <></>;
+  
+  return <></>;
 
   const dataRow = row.original;
 

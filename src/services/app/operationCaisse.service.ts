@@ -9,8 +9,11 @@ import {
 } from "@/types/app_types";
 
 export default class OperationCaisseService extends ApiService {
+  // endpoint(): string {
+  //   return "/main/" + this.getName() + '/filtre';
+  // }
   endpoint(): string {
-    return "/main/" + this.getName() + '/filtre';
+    return "/" + this.getName() + "/";
   }
 
   async getAll({
@@ -64,6 +67,8 @@ export default class OperationCaisseService extends ApiService {
       body,
       headers,
     });
+    console.log("msgBody",body);
+    
 
     if (response.ok) {
       const rep = await response.json();
@@ -118,30 +123,30 @@ export default class OperationCaisseService extends ApiService {
   }
 
   getName() {
-    return "operations-caisse";
+    return "operations";
   }
 
   getColumns() {
     const columns: ColumnDef<DefaultAppRowTypeInterface, any>[] = [
       {
-        accessorKey: "montant",
+        accessorKey: "Montant",
         header: "Montant",
       },
       {
-        accessorKey: "nom_destinataire",
-        header: "Nom Destinataire",
+        accessorKey: "NomDestinataire",
+        header: "Nom destinataire",
         // cell: cellMoney,
       },
       {
-        accessorKey: "numero_cni_dest",
+        accessorKey: "NumeroCNIDestinataire",
         header: "Numero CNI Destinataire",
       },
       {
-        accessorKey: "nom_expediteur",
+        accessorKey: "NomExpediteur",
         header: "Nom expéditeur",
       },
       {
-        accessorKey: "numero_cni_exp",
+        accessorKey: "NumeroCNIExpediteur",
         header: "Numero CNI Expediteur",
       },
     ];
@@ -149,9 +154,11 @@ export default class OperationCaisseService extends ApiService {
   }
 
   async getForm() {
+    // const options = await this.getDataSelectOptions();
+    const user = await this.getCurrentUser();
     const form: CustomFieldProps[] = [
       {
-        name: "montant",
+        name: "Montant",
         label: "Montant",
         type: "number",
         classparent: "",
@@ -159,7 +166,7 @@ export default class OperationCaisseService extends ApiService {
         classlabel: "",
       }, 
       {
-        name: "nom_destinataire",
+        name: "NomDestinataire",
         label: "Nom destinataire",
         type: "text",
         classparent: "",
@@ -167,7 +174,7 @@ export default class OperationCaisseService extends ApiService {
         classlabel: "",
       }, 
       {
-        name: "numero_cni_dest",
+        name: "NumeroCNIDestinataire",
         label: "Numero CNI Dest",
         type: "number",
         classparent: "",
@@ -175,7 +182,7 @@ export default class OperationCaisseService extends ApiService {
         classlabel: "",
       }, 
       {
-        name: "nom_expediteur",
+        name: "NomExpediteur",
         label: "Nom expéditeur",
         type: "text",
         classparent: "",
@@ -183,14 +190,26 @@ export default class OperationCaisseService extends ApiService {
         classlabel: "",
       }, 
       {
-        name: "numero_cni_exp",
+        name: "NumeroCNIExpediteur",
         label: "Numero CNI Exp",
         type: "number",
         classparent: "",
         customclass: "",
         classlabel: "",
-      },  
+      }, 
+      {
+        name: "id_user",
+        label: "Utlisateur",
+        type: "select",
+        options: [
+          { label: "User", value: 1 }
+        ],
+        classparent: "",
+        customclass: "",
+        classlabel: "",
+      }, 
     ];
+
     return form;
   }
 

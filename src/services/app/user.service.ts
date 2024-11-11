@@ -55,7 +55,7 @@ export default class UserService extends ApiService {
     body: ApiServiceType.BodyClassic;
   }) {
     const response = await this.post({
-      endPointOption: "register",
+      endPointOption: "",
       body,
       headers,
     });
@@ -175,33 +175,22 @@ export default class UserService extends ApiService {
       //   classlabel: "",
       // },
       {
-        name: "id_administration",
-        label: "Administration",
+        name: "id_organisation",
+        label: "Organisation",
         type: "select",
         disabled: !!currentAdministration,
-        options: currentAdministration
-          ? options.administration.filter(
-              (option) => option.value == currentAdministration?.id
-            )
-          : options.administration,
+        options: [
+          { label: "Organisation", value: 1 }
+        ],
         classparent: "",
         customclass: "",
         classlabel: "",
       },
+    
       {
-        name: "id_site",
-        label: "Site",
-        options: options.site,
-        type: "select",
-        classparent: "",
-        customclass: "",
-        classlabel: "",
-      },
-      {
-        name: "id_role",
+        name: "roles",
         label: "Rôle",
-        options: options.role,
-        type: "select",
+        type: "text",
         classparent: "",
         customclass: "",
         classlabel: "",
