@@ -60,6 +60,13 @@ export function HeaderAdmin() {
                 link="/utilisateurs"
                 variant="link"
               />,
+              <CustomLink
+                key={3}
+                icon={<UserRoundCog strokeWidth={1} />}
+                text="Organisations"
+                link="/organisations"
+                variant="link"
+              />,
             ]}
           />
         </div>

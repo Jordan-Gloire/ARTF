@@ -114,7 +114,7 @@ export default class CaisseService extends ApiService {
   }
 
   getName() {
-    return "operations";
+    return "organisations";
   }
 
   async validatePrint(id: number | string) {
@@ -130,25 +130,13 @@ export default class CaisseService extends ApiService {
   getColumns() {
     const columns: ColumnDef<DefaultAppRowTypeInterface, any>[] = [
       {
-        accessorKey: "montant",
-        header: "Montant",
+        accessorKey: "nom",
+        header: "Nom",
       },
       {
-        accessorKey: "nom_destinataire",
-        header: "Nom destinataire",
+        accessorKey: "sigle",
+        header: "Sigle",
         // cell: cellMoney,
-      },
-      {
-        accessorKey: "numero_cni_destinataire",
-        header: "Numero CNI Destinataire",
-      },
-      {
-        accessorKey: "nom_expediteur",
-        header: "Nom expéditeur",
-      },
-      {
-        accessorKey: "numero_cni_expediteur",
-        header: "Numero CNI Expediteur",
       },
     ];
     return columns;
@@ -159,80 +147,47 @@ export default class CaisseService extends ApiService {
     const user = await this.getCurrentUser();
     const form: CustomFieldProps[] = [
       {
-        name: "montant",
-        label: "Montant",
-        type: "number",
-        classparent: "",
-        customclass: "",
-        classlabel: "",
-      }, 
-      {
-        name: "nom_destinataire",
-        label: "Nom destinataire",
+        name: "nom",
+        label: "Nom",
         type: "text",
         classparent: "",
         customclass: "",
         classlabel: "",
       }, 
       {
-        name: "numero_cni_destinataire",
-        label: "Numero CNI Dest",
-        type: "number",
-        classparent: "",
-        customclass: "",
-        classlabel: "",
-      }, 
-      {
-        name: "nom_expediteur",
-        label: "Nom expéditeur",
+        name: "sigle",
+        label: "Sigle",
         type: "text",
         classparent: "",
         customclass: "",
         classlabel: "",
-      }, 
-      {
-        name: "numero_cni_expediteur",
-        label: "Numero CNI Exp",
-        type: "number",
-        classparent: "",
-        customclass: "",
-        classlabel: "",
-      }, 
-      {
-        name: "id_user",
-        label: "Organisation",
-        type: "select",
-        options: options.user,
-        classparent: "",
-        customclass: "",
-        classlabel: "",
-      }, 
+      },
     ];
 
     return form;
   }
   async getDataSelectOptions(): Promise<{
     user: SelectDataOption[];
-    // prestation: SelectDataOption[];
+    prestation: SelectDataOption[];
   }> {
     try {
       interface SelectInterface {
         user: SelectDataOption[];
-        // prestation: SelectDataOption[];
+        prestation: SelectDataOption[];
       }
       const response = await this.getDataSelectTable<SelectInterface>([
         "user",
-        // "prestation",
+        "prestation",
       ]);
 
       return {
         user: response.user,
-        // prestation: response.prestation,
+        prestation: response.prestation,
       };
     } catch (error) {
       return {
         user: [],
-        // prestation: [],
+        prestation: [],
       };
     }
   }

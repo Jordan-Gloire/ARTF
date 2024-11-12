@@ -1,25 +1,9 @@
 import ApiServiceType from "@/types/apiServiceType";
-import ApiService from "../api.service";
-import { User } from "next-auth";
-
-type LoginResponse = {
-  access_token: string;
-  token_type: string;
-  expires_in: number | string;
-};
-
-type MeReponse = {
-  email_verified_at: string | null | undefined;
-  created_at: string;
-  updated_at: string;
-  id: string | number;
-  name: string;
-  email: string;
-};
+import { Session, User } from "next-auth";
 
 export default class AuthService {
   endpoint(): string {
-    return "/auth/";
+    return "/api/";
   }
 
   async login({
@@ -28,37 +12,30 @@ export default class AuthService {
     body: ApiServiceType.BodyClassic;
   }): Promise<User | null> {
     try {
-      const response = await this.post({
-        endPointOption: "login",
-        body,
-        token: "auth",
+      const url = process.env.NEXT_PUBLIC_API_URL?.replace("v1", "") + "login_check";
+      const data = JSON.stringify(body);
+      const appHeaders = new Headers();
+      appHeaders.append("Content-Type", "application/json");
+      // console.log({ url, data, body });
+
+      const response = await fetch(url, {
+        method: "POST",
+        body: data,
+        headers: appHeaders,
+        cache: "no-store",
       });
 
       if (response.ok) {
-        const loginResponse: LoginResponse = await response.json();
-        const me = await this.me({ token: loginResponse.access_token });
-        if (me && Object.entries(me).length > 0) {
-          const user: User = { ...loginResponse, ...me };
-          return user;
-        }
+        const rep = await response.json();
+        // console.log({ rep });
+        return rep;
       }
-      return null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  async me({ token }: { token?: string }): Promise<MeReponse | null> {
-    try {
-      const response = await this.post({
-        endPointOption: "me",
-        body: null,
-        token: token,
-      });
-
-      if (response.ok) {
-        return await response.json();
-      }
+      console.log(
+        "status",
+        response.status,
+        response.statusText,
+        await response.text()
+      );
 
       return null;
     } catch (e) {

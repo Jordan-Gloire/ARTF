@@ -8,29 +8,30 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "Username and Password",
       credentials: {
-        email: { label: "Numero", type: "tel", placeholder: "" },
+        username: { label: "Telephone", type: "tel", placeholder: "" },
         password: { label: "Mot de passe", type: "password" },
       },
       async authorize(credentials): Promise<User | null> {
         try {
-          if (!credentials?.email || !credentials?.password) {
-            throw new Error("Invalid credentials");
+          if (!credentials?.username || !credentials?.password) {
+            throw new Error("Identifiants invalides");
           }
 
           const authService = new AuthService();
-          const { email, password } = credentials;
+          const { username, password } = credentials;
 
-          const user = await authService.login({ body: { username : email, password } });
+          const user = await authService.login({
+            body: { username, password },
+          });
 
           if (user) {
-            // Assurez-vous que l'objet user retourné correspond à l'interface User définie
             return user;
           }
 
           return null;
         } catch (e) {
           console.error(e);
-          return null;
+          throw new Error("Erreur d'authentification");
         }
       },
     }),
@@ -43,17 +44,8 @@ export const authOptions: AuthOptions = {
     signIn: "/login",
   },
   callbacks: {
-    async jwt({
-      token,
-      user,
-      account,
-    }: {
-      token: JWT;
-      user?: User;
-      account?: any;
-    }): Promise<JWT> {
+    async jwt({ token, user }: { token: JWT; user?: User }): Promise<JWT> {
       if (user) {
-        // Lors de la connexion initiale
         token = { ...token, ...user };
       }
       return token;
@@ -62,27 +54,17 @@ export const authOptions: AuthOptions = {
     async session({
       session,
       token,
+      user,
     }: {
       session: Session;
       token: JWT;
+      user: any;
     }): Promise<Session> {
-      // a tester
-      session.user = token as any;
-      session.token = token.token_type + " " + token.access_token; // Assurez-vous que ces propriétés existent dans votre token
-      session.administration = token.administration;
-      // session.json_code_value = token.json_code_value;
+      
+      session = { ...session, ...token };
+      
+      // console.log({ token, session, user });
       return session;
-    },
-
-    async redirect({
-      url,
-      baseUrl,
-    }: {
-      url: string;
-      baseUrl: string;
-    }): Promise<string> {
-      // Vous pouvez personnaliser la logique de redirection ici si nécessaire
-      return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
 };

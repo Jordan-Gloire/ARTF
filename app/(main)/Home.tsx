@@ -9,6 +9,7 @@ import {
   Users,
   UserRoundCog,
   HandCoinsIcon,
+  Building2,
 } from "lucide-react";
 import { useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -52,6 +53,11 @@ export default function Home() {
           link="/utilisateurs"
           titre="Utilisateurs"
           icon={<UserRoundCog strokeWidth={itemMenuBorderWith} size={65} />}
+        />
+        <ItemMenu
+          link="/organisations"
+          titre="Organisations"
+          icon={<Building2 strokeWidth={itemMenuBorderWith} size={65} />}
         />
       </div>
     </div>

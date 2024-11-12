@@ -39,15 +39,15 @@ function LoggedIn(props: LoggedInProps) {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm">
             <Avatar className="mr-2 size-6">
-              <AvatarFallback>{props.user?.name?.[0]}</AvatarFallback>
+              <AvatarFallback>{props.user?.nom?.[0]}</AvatarFallback>
               {props.user?.image && (
                 <AvatarImage
                   src={props.user.image}
-                  alt={props.user.name ?? "user img"}
+                  alt={props.user.nom ?? "user img"}
                 />
               )}
             </Avatar>
-            {props.user.name}
+            {props.user.nom}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

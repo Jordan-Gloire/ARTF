@@ -55,20 +55,6 @@ export function HeaderAdministration({
               </Button>
             }
             listCustomLink={[
-              // <CustomLink
-              //   key={0}
-              //   icon={<Users strokeWidth={1} />}
-              //   text="Partenaires"
-              //   link={`/administrations/${administrationId}/partenaires`}
-              //   variant="link"
-              // />,
-              // <CustomLink
-              //   key={1}
-              //   icon={<SquareLibrary strokeWidth={1} />}
-              //   text="Prestations"
-              //   link={`/administrations/${administrationId}/prestations`}
-              //   variant="link"
-              // />,
               <CustomLink
                 key={3}
                 icon={<UserRoundCog strokeWidth={1} />}
@@ -76,20 +62,13 @@ export function HeaderAdministration({
                 link={`/administrations/${administrationId}/utilisateurs`}
                 variant="link"
               />,
-              // <CustomLink
-              //   key={3}
-              //   icon={<MapPinned strokeWidth={1} />}
-              //   text="Site"
-              //   link={`/administrations/${administrationId}/sites`}
-              //   variant="link"
-              // />,
-              // <CustomLink
-              //   key={3}
-              //   icon={<Cog strokeWidth={1} />}
-              //   text="Rôle"
-              //   link={`/administrations/${administrationId}/roles`}
-              //   variant="link"
-              // />,
+              <CustomLink
+                key={3}
+                icon={<UserRoundCog strokeWidth={1} />}
+                text="Organisations"
+                link={`/administrations/${administrationId}/organisations`}
+                variant="link"
+              />,
             ]}
           />
         </div>

@@ -137,7 +137,7 @@ export default class ApiService {
       const response = await this.sendRequest({
         method: "POST",
         endPointOption: "",
-        url: process.env.NEXT_PUBLIC_API_URL + "/main/data-select",
+        url: process.env.NEXT_PUBLIC_API_URL + "/users/data-select",
         body,
       });
       // console.log({ response });

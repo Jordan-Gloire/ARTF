@@ -132,11 +132,7 @@ export default class UserService extends ApiService {
       // },
       {
         accessorKey: "id_administration",
-        header: "Administration",
-      },
-      {
-        accessorKey: "id_site",
-        header: "Site",
+        header: "Organisation",
       },
       {
         accessorKey: "id_role",
@@ -166,22 +162,13 @@ export default class UserService extends ApiService {
         customclass: "",
         classlabel: "",
       },
-      // {
-      //   name: "fonction",
-      //   label: "Fonction",
-      //   type: "text",
-      //   classparent: "",
-      //   customclass: "",
-      //   classlabel: "",
-      // },
+
       {
         name: "id_organisation",
         label: "Organisation",
         type: "select",
         disabled: !!currentAdministration,
-        options: [
-          { label: "Organisation", value: 1 }
-        ],
+        options: options.organisation,
         classparent: "",
         customclass: "",
         classlabel: "",
@@ -209,32 +196,28 @@ export default class UserService extends ApiService {
   }
 
   async getDataSelectOptions(): Promise<{
-    administration: SelectDataOption[];
-    site: SelectDataOption[];
-    role: SelectDataOption[];
+    organisation: SelectDataOption[];
+    user: SelectDataOption[];
+    // role: SelectDataOption[];
   }> {
     try {
       interface SelectInterface {
-        administration: SelectDataOption[];
-        site: SelectDataOption[];
-        role: SelectDataOption[];
+        organisation: SelectDataOption[];
+        user: SelectDataOption[];
       }
       const response = await this.getDataSelectTable<SelectInterface>([
-        "administration",
-        "site",
-        "role",
+        "organisation",
+        "user",
       ]);
 
       return {
-        administration: response.administration,
-        site: response.site,
-        role: response.role,
+        organisation: response.organisation,
+        user: response.user,
       };
     } catch (error) {
       return {
-        administration: [],
-        site: [],
-        role: [],
+        organisation: [],
+        user: [],
       };
     }
   }
