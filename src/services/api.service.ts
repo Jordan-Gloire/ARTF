@@ -142,6 +142,7 @@ export default class ApiService {
       });
       // console.log({ response });
 
+      console.log('result', response.statusText, await response.text())
       if (response.ok) return await response.json();
       throw new Error(await response.json());
     } catch (error: any) {

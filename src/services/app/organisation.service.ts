@@ -143,8 +143,8 @@ export default class CaisseService extends ApiService {
   }
 
   async getForm() {
-    const options = await this.getDataSelectOptions();
-    const user = await this.getCurrentUser();
+    // const options = await this.getDataSelectOptions();
+    // const user = await this.getCurrentUser();
     const form: CustomFieldProps[] = [
       {
         name: "nom",
@@ -168,7 +168,7 @@ export default class CaisseService extends ApiService {
   }
   async getDataSelectOptions(): Promise<{
     user: SelectDataOption[];
-    prestation: SelectDataOption[];
+    // prestation: SelectDataOption[];
   }> {
     try {
       interface SelectInterface {
@@ -177,17 +177,17 @@ export default class CaisseService extends ApiService {
       }
       const response = await this.getDataSelectTable<SelectInterface>([
         "user",
-        "prestation",
+        // "prestation",
       ]);
 
       return {
         user: response.user,
-        prestation: response.prestation,
+        // prestation: response.prestation,
       };
     } catch (error) {
       return {
         user: [],
-        prestation: [],
+        // prestation: [],
       };
     }
   }
