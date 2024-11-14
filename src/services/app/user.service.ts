@@ -144,7 +144,8 @@ export default class UserService extends ApiService {
 
   async getForm() {
     const options = await this.getDataSelectOptions();
-    const currentAdministration = await this.getCurrentAdministration();
+    // const currentAdministration = await this.getCurrentAdministration();
+    const currentOrganisation = await this.getCurrentOrganisation();
     const form: CustomFieldProps[] = [
       {
         name: "nom",
@@ -167,7 +168,7 @@ export default class UserService extends ApiService {
         name: "id_organisation",
         label: "Organisation",
         type: "select",
-        disabled: !!currentAdministration,
+        disabled: !!currentOrganisation,
         options: options.organisation,
         classparent: "",
         customclass: "",

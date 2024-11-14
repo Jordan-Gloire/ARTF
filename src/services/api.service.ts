@@ -142,7 +142,7 @@ export default class ApiService {
       });
       // console.log({ response });
 
-      console.log('result', response.statusText, await response.text())
+      // console.log('result', response.statusText, await response.text())
       if (response.ok) return await response.json();
       throw new Error(await response.json());
     } catch (error: any) {
@@ -156,7 +156,7 @@ export default class ApiService {
     return session?.user;
   }
 
-  async getCurrentAdministration(): Promise<
+  async getCurrentOrganisation(): Promise<
     AdministrationInterface | undefined
   > {
     const session = await getAuthSession();

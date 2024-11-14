@@ -13,6 +13,7 @@ export default async function page() {
 
   if (!session) {
     throw new Error("not session");
+    
   }
 
   const user = session.user;
@@ -21,12 +22,12 @@ export default async function page() {
     <Card className="m-auto mt-4 max-w-lg">
       <CardHeader className="flex flex-row gap-4 space-y-0">
         <Avatar>
-          <AvatarFallback>{user.name?.[0]}</AvatarFallback>
+          <AvatarFallback>{user.nom?.[0]}</AvatarFallback>
           {user.image && <AvatarImage src={user.image} alt="user image" />}
         </Avatar>
         <div className="flex flex-col gap-1">
-          <CardTitle>{user.name}</CardTitle>
-          <CardDescription>{user.email}</CardDescription>
+          <CardTitle>{user.nom}</CardTitle>
+          <CardDescription>{user.telephone}</CardDescription>
         </div>
       </CardHeader>
     </Card>

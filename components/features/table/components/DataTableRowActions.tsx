@@ -123,7 +123,7 @@ export default DataTableRowActions;
               ) : (
                 <></>
               )}
-              Suprrimer
+              Supprimer
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -196,7 +196,7 @@ export default DataTableRowActions;
             ) : (
               <></>
             )}
-            Suprrimer
+            Supprimer
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

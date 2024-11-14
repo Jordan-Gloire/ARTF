@@ -97,7 +97,7 @@ const ButtonDelete = <
             ) : (
               <></>
             )}
-            Suprrimer
+            Supprimer
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
