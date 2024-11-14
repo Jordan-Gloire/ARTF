@@ -4,20 +4,17 @@ import { actionClient } from "../safe-actions";
 import { z } from "zod";
 import CaisseService from "@/src/services/app/caisse.service";
 import UserService from "@/src/services/app/user.service";
-import  OperationCaisseService  from '@/src/services/app/operationCaisse.service';
 import  OrganisationService  from '@/src/services/app/organisation.service';
 type AsService =
 
   | UserService
   | CaisseService
-  | OperationCaisseService
   | OrganisationService;
 
 const getService = (name: string): AsService | null => {
   const services: Record<string, new () => AsService> = {
     users: UserService,
     operations: CaisseService,
-    OperationCaisses: OperationCaisseService,
     organisations: OrganisationService ,
   };
   

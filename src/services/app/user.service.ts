@@ -131,11 +131,11 @@ export default class UserService extends ApiService {
       //   header: "Fonction",
       // },
       {
-        accessorKey: "id_administration",
+        accessorKey: "id_organisation",
         header: "Organisation",
       },
       {
-        accessorKey: "id_role",
+        accessorKey: "roles",
         header: "Rôle",
       },
     ];

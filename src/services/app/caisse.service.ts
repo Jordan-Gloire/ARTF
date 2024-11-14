@@ -60,6 +60,7 @@ export default class CaisseService extends ApiService {
       body,
       headers,
     });
+console.log("msgBody",body);
 
     if (response.ok) {
       const rep = await response.json();
@@ -156,7 +157,8 @@ export default class CaisseService extends ApiService {
 
   async getForm() {
     const options = await this.getDataSelectOptions();
-    const user = await this.getCurrentUser();
+    const currentAdministration = await this.getCurrentAdministration();
+
     const form: CustomFieldProps[] = [
       {
         name: "montant",
@@ -200,9 +202,18 @@ export default class CaisseService extends ApiService {
       }, 
       {
         name: "id_user",
-        label: "Organisation",
+        label: "Utilisateur",
         type: "select",
         options: options.user,
+        classparent: "",
+        customclass: "",
+        classlabel: "",
+      }, 
+      {
+        name: "statut",
+        label: "Statut",
+        type: "select",
+        options: options.statut,
         classparent: "",
         customclass: "",
         classlabel: "",
@@ -213,26 +224,28 @@ export default class CaisseService extends ApiService {
   }
   async getDataSelectOptions(): Promise<{
     user: SelectDataOption[];
+    statut: SelectDataOption[];
     // prestation: SelectDataOption[];
   }> {
     try {
       interface SelectInterface {
         user: SelectDataOption[];
-        // prestation: SelectDataOption[];
+        statut: SelectDataOption[];
       }
       const response = await this.getDataSelectTable<SelectInterface>([
         "user",
-        // "prestation",
+        "statut",
       ]);
 
       return {
         user: response.user,
+        statut: response.statut,
         // prestation: response.prestation,
       };
     } catch (error) {
       return {
         user: [],
-        // prestation: [],
+        statut: [],
       };
     }
   }
