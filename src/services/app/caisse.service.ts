@@ -7,6 +7,7 @@ import ApiService from "../api.service";
 import { ColumnDef } from "@tanstack/react-table";
 import { CustomFieldProps } from "@/types/fieldsprops";
 import { cellMoney } from "@/src/hooks/client_hooks";
+// import { cellMoney } from "@/src/hooks/client_hooks";
 
 export default class CaisseService extends ApiService {
   endpoint(): string {
@@ -133,11 +134,11 @@ console.log("msgBody",body);
       {
         accessorKey: "montant",
         header: "Montant",
+        cell: cellMoney,
       },
       {
         accessorKey: "nom_destinataire",
         header: "Nom destinataire",
-        // cell: cellMoney,
       },
       {
         accessorKey: "numero_cni_destinataire",
@@ -156,9 +157,8 @@ console.log("msgBody",body);
   }
 
   async getForm() {
-    const options = await this.getDataSelectOptions();
-    const currentAdministration = await this.getCurrentAdministration();
-
+    // const options = await this.getDataSelectOptions();
+    const user = await this.getCurrentUser();
     const form: CustomFieldProps[] = [
       {
         name: "montant",
@@ -179,7 +179,7 @@ console.log("msgBody",body);
       {
         name: "numero_cni_destinataire",
         label: "Numero CNI Dest",
-        type: "number",
+        type: "text",
         classparent: "",
         customclass: "",
         classlabel: "",
@@ -195,17 +195,18 @@ console.log("msgBody",body);
       {
         name: "numero_cni_expediteur",
         label: "Numero CNI Exp",
-        type: "number",
+        type: "text",
         classparent: "",
         customclass: "",
         classlabel: "",
       }, 
       {
         name: "id_user",
-        label: "Utilisateur",
-        type: "select",
-        options: options.user,
-        classparent: "",
+        label: "Utilisateurs",
+        type: "text",
+        defaultValue : user?.id.toString(),
+        // options: ,
+        classparent: "hidden",
         customclass: "",
         classlabel: "",
       }, 

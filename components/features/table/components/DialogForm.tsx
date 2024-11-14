@@ -115,19 +115,22 @@ export function DialogForm<
             <div className="grid grid-cols-2 gap-4 py-4">
               {props.form.map((input, index) => {
                 // console.log({ input }, props.row?.original);
+                const field = { ...input };
                 if (props.row) {
                   const defaultValue =
-                    input.name in props.row.original
-                      ? props.row.original[input.name]
+                    field.name in props.row.original
+                      ? props.row.original[field.name]
                       : "";
-                  input.defaultValue = extractValueInValueType(defaultValue);
+
+                  const extract = extractValueInValueType(defaultValue);
+                  if (extract) field.defaultValue = extract;
                 }
 
                 return (
                   <GenerateFieldByType
                     key={`field_dialog_${index}`}
-                    type={input.type}
-                    input={input}
+                    type={field.type}
+                    input={field}
                   />
                 );
               })}
