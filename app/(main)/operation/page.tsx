@@ -1,9 +1,11 @@
 
 import AppPageTable from "@/components/custom/ui/AppPageTable";
-import CaisseService from "@/src/services/app/caisse.service";
+// import CaisseService from "@/src/services/app/caisse.service";
 
 export default async function page() {
-  const service = new CaisseService();
+
+    const myClass = (await import("@/src/services/app/caisse.service")).default;
+    const service = new myClass();
 
   const role = await service.getDefaultRole();
   const columns = service.getColumns();

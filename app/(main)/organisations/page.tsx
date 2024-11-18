@@ -1,8 +1,10 @@
-import OrganisationService from "@/src/services/app/organisation.service";
+// import OrganisationService from "@/src/services/app/organisation.service";
 import AppPageTable from "@/components/custom/ui/AppPageTable";
 
 export default async function page() {
-  const service = new OrganisationService();
+  const myClass = (await import("@/src/services/app/organisation.service"))
+    .default;
+  const service = new myClass();
 
   const role = await service.getDefaultRole();
   const columns = service.getColumns();

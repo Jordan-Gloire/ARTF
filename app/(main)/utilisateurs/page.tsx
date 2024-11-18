@@ -1,8 +1,9 @@
-import UserService from "@/src/services/app/user.service";
+// import UserService from "@/src/services/app/user.service";
 import AppPageTable from "@/components/custom/ui/AppPageTable";
 
 export default async function page() {
-  const service = new UserService();
+   const myClass = (await import("@/src/services/app/user.service")).default;
+   const service = new myClass();
 
   const role = await service.getDefaultRole();
   const columns = service.getColumns();

@@ -20,7 +20,7 @@ type ActionAppStore = {
 };
 
 const useAppStore = create<AppStore & ActionAppStore>((set) => ({
-  title: "Caisse Nationnal",
+  title: "ARTF",
   administrationId: "",
   currentAdministration: undefined,
   updateTitle: (newTitle) => set(() => ({ title: newTitle })),
