@@ -27,6 +27,7 @@ import {
 } from "@/types/app_types";
 import { createData, updateRow } from "@/src/actions/app/service-actions";
 import { usePathname } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 interface DialogFormProps<
   TData extends ExtendedRowType<DefaultAppRowTypeInterface>
@@ -51,18 +52,20 @@ export function DialogForm<
   title,
   trigger = <Button variant="outline">Open</Button>,
   // handleSubmit,
+  form,
   ...props
 }: Readonly<DialogFormProps<TData>>) {
   const path = usePathname();
   const [open, setOpen] = useState(false);
   const [state, setState] = useState(initialState);
-  // const [state, formAction] = useActionState(handleSubmit, initialState);
-  const { pending } = useFormStatus();
+  const [theForm, setForm] = useState([...form]);
+  const [theTrigger, setTigger] = useState(trigger);
+  // const { pending } = useFormStatus();
 
   const onSubmit = async (formData: FormData) => {
     if (props.row) {
       const result = await updateRow(
-        props.row?.original.id.toString(),
+        props.row?.original.id?.toString() ?? "0",
         props.serviceName,
         path,
         state,
@@ -80,22 +83,42 @@ export function DialogForm<
   useEffect(() => {
     // console.log({ state });
     if (state.code && state.code == 200) {
-      if (props.serviceName == "administrations") {
-        document.getElementById("file_logo_ad")?.click();
-      }
-      setOpen(false);
       // toast.success(props.row ? "Modifier avec succès" : "Ajouter avec succès");
       toast.success(state.message);
+      setOpen(false);
+      // setState(initialState);
     } else if (state.code && state.code != 200) {
       toast.error(state.message);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
+  const mutation = useMutation({
+    mutationFn: onSubmit,
+    onSuccess: () => {
+      // toast.success(" réussie");
+    },
+    onError: (error) => {
+      console.error(error);
+      // toast.error("Erreu: " + error.message);
+    },
+  });
+
+  // console.log({pending}, mutation.isPending);
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="max-w-lg p-0">
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        setOpen(open);
+        if (open) {
+          // resetDialog();
+          setState(initialState);
+        }
+      }}
+    >
+      <DialogTrigger asChild>{theTrigger}</DialogTrigger>
+      <DialogContent aria-describedby="custom form" className="max-w-lg p-0">
         <DialogHeader className="p-4">
           <DialogTitle>
             {title ? `${props.row ? "Modifier" : "Ajouter"} ${title}` : ""}
@@ -103,9 +126,9 @@ export function DialogForm<
         </DialogHeader>
         <ScrollArea className="max-h-[650px] w-full overflow-x-visible px-6 pb-2">
           <form
-            action={onSubmit}
+            action={mutation.mutate}
             onSubmit={
-              pending || state.code == 200
+              mutation.isPending || state.code == 200
                 ? (event) => {
                     event.preventDefault();
                   }
@@ -113,27 +136,27 @@ export function DialogForm<
             }
           >
             <div className="grid grid-cols-2 gap-4 py-4">
-              {props.form.map((input, index) => {
-                // console.log({ input }, props.row?.original);
-                const field = { ...input };
-                if (props.row) {
-                  const defaultValue =
-                    field.name in props.row.original
-                      ? props.row.original[field.name]
-                      : "";
+              {open &&
+                theForm.map((input, index) => {
+                  // console.log({ input }, props.row?.original);
+                  const field = { ...input };
+                  if (props.row) {
+                    const value =
+                      field.name in props.row.original
+                        ? props.row.original[field.name]
+                        : "";
+                    const valueExtract = extractValueInValueType(value);
 
-                  const extract = extractValueInValueType(defaultValue);
-                  if (extract) field.defaultValue = extract;
-                }
-
-                return (
-                  <GenerateFieldByType
-                    key={`field_dialog_${index}`}
-                    type={field.type}
-                    input={field}
-                  />
-                );
-              })}
+                    if (valueExtract) field.defaultValue = valueExtract;
+                  }
+                  return (
+                    <GenerateFieldByType
+                      key={`field_dialog_${index}`}
+                      type={field.type}
+                      input={field}
+                    />
+                  );
+                })}
             </div>
             {state.code && state.code != 200 && (
               <span className="flex flex-wrap p-2 text-red-500">
@@ -146,9 +169,11 @@ export function DialogForm<
                 variant="default"
                 className="font-semibold"
                 size="lg"
-                disabled={pending || !props.role.write || state.code == 200}
+                disabled={
+                  mutation.isPending || !props.role.write || state.code == 200
+                }
               >
-                {pending && <Loader className="mr-2" size={12} />}
+                {mutation.isPending && <Loader className="mr-2" size={12} />}
                 {props.row ? "Modifier" : "Valider"}
               </Button>
             </DialogFooter>

@@ -37,8 +37,8 @@ const ButtonUpdate = <
 }: DataTableRowUpdateProps<TData>) => {
   //   useParams<{ administrationId: string }>()?.administrationId ??
   //     "generate-recu-print";
-  const caisseSerice = new CaisseService();
-  if (serviceName == caisseSerice.getName()) return <></>;
+  // const caisseSerice = new CaisseService();
+  // if (serviceName == caisseSerice.getName()) return <></>;
 
   //   console.log({ dataRow });
 

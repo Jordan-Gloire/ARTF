@@ -174,11 +174,15 @@ export default class UserService extends ApiService {
         customclass: "",
         classlabel: "",
       },
-    
+
       {
         name: "roles",
         label: "Rôle",
-        type: "text",
+        type: "select",
+        options: [
+          { value: "ADMIN", label: "Admin" },
+          { value: "USER", label: "User" },
+        ],
         classparent: "",
         customclass: "",
         classlabel: "",

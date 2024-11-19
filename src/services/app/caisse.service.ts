@@ -152,6 +152,10 @@ console.log("msgBody",body);
         accessorKey: "numero_cni_expediteur",
         header: "Numero CNI Expediteur",
       },
+      {
+        accessorKey: "statut",
+        header: "Statut",
+      },
     ];
     return columns;
   }
@@ -224,28 +228,28 @@ console.log("msgBody",body);
     return form;
   }
   async getDataSelectOptions(): Promise<{
-    user: SelectDataOption[];
+    // user: SelectDataOption[];
     statut: SelectDataOption[];
     // prestation: SelectDataOption[];
   }> {
     try {
       interface SelectInterface {
-        user: SelectDataOption[];
+        // user: SelectDataOption[];
         statut: SelectDataOption[];
       }
       const response = await this.getDataSelectTable<SelectInterface>([
-        "user",
+        // "user",
         "statut",
       ]);
 
       return {
-        user: response.user,
+        // user: response.user,
         statut: response.statut,
         // prestation: response.prestation,
       };
     } catch (error) {
       return {
-        user: [],
+        // user: [],
         statut: [],
       };
     }

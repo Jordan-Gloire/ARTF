@@ -2,5 +2,5 @@
 
 export const SiteConfig = {
   title: "ARTF",
-  description: "La ARTF",
+  description: "ARTF",
 } as const;

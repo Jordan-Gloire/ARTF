@@ -11,17 +11,17 @@ import {
   HandCoinsIcon,
   Building2,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 export default function Home() {
-  const updateAdministration = useAppStore(
-    useShallow((state) => state.updateAdministrationId)
-  );
+  // const session = useSession();
 
-  useEffect(() => {
-    updateAdministration("");
-  }, []);
+  // useEffect(() => {
+  //   console.log({ session });
+  // }, [session]);
+
   return (
     <div className="flex flex-col items-center justify-center gap-5">
       <div className="flex items-center gap-4">

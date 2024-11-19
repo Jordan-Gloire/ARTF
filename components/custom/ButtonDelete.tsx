@@ -61,13 +61,12 @@ const ButtonDelete = <
     onSuccess: (data) => toast.success("Suppression réussie"),
   });
 
-
   return (
     <AlertDialog>
       <CustomToolTip
         trigger={
           <AlertDialogTrigger asChild>
-            <Button disabled={!props.role.delete} variant="ghost" size="icon">
+            <Button variant="ghost" size="icon">
               <Trash2 size={12} />
               <span className="sr-only">Supprimer</span>
             </Button>
