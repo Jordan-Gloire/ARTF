@@ -61,7 +61,6 @@ export default class CaisseService extends ApiService {
       body,
       headers,
     });
-console.log("msgBody",body);
 
     if (response.ok) {
       const rep = await response.json();
@@ -72,6 +71,28 @@ console.log("msgBody",body);
     return { code: response.status, message: response.statusText };
   }
 
+  // async update({
+  //   headers,
+  //   body,
+  //   id,
+  // }: {
+  //   headers?: ApiServiceType.AppHeaders;
+  //   id: string | number;
+  //   body: ApiServiceType.BodyClassic;
+  // }) {
+  //   const response = await this.put({
+  //     endPointOption: id.toString(),
+  //     body,
+  //     headers,
+  //   });
+  //   if (response.ok) {
+  //     console.log("msgRep",response);
+  //     const rep = await response.json();
+  //   rep.code = 200;
+  //     return rep;
+  //   }
+  //   return { code: response.status, message: response.statusText };
+  // }
   async update({
     headers,
     body,
@@ -86,15 +107,19 @@ console.log("msgBody",body);
       body,
       headers,
     });
+  
     if (response.ok) {
+      console.log("msgRep", response);
       const rep = await response.json();
-      rep.code = 200;
+      rep.code = 401;
       return rep;
+    } else {
+      // Logique supplémentaire dans le cas où response.ok est false
+      console.error("Erreur lors de la mise à jour :", response.statusText);
+      return { code: response.status, message: response.statusText };
     }
-
-    return { code: response.status, message: response.statusText };
   }
-
+  
   async delete_({
     headers,
     id,
