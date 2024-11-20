@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "../ui/button";
-import CaisseService from "@/src/services/app/caisse.service";
 import {
   DefaultAppRowTypeInterface,
   ExtendedRowType,
@@ -16,6 +15,9 @@ import {
 import { Pencil } from "lucide-react";
 import { CustomInputFieldInterface } from "@/types/fieldsprops";
 import { DialogForm } from "@/components/features/table/components/DialogForm";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { UserInterface } from "next-auth";
 
 interface DataTableRowUpdateProps<
   TData extends ExtendedRowType<DefaultAppRowTypeInterface>
@@ -42,7 +44,17 @@ const ButtonUpdate = <
 
   //   console.log({ dataRow });
 
-  return (
+  const session = useSession();
+  const [user, setUser] = useState<UserInterface>();
+
+  useEffect(() => {
+    if (session?.data && !user) {
+      setUser(session.data.user);
+    }
+  }, [session]);
+
+
+  return user?.roles == "ROLE_ADMIN" ? (
     <TooltipProvider>
       <Tooltip>
         <DialogForm
@@ -51,7 +63,11 @@ const ButtonUpdate = <
           row={row}
           trigger={
             <TooltipTrigger asChild>
-              <Button disabled={!props.role.write} variant="ghost" size="icon">
+              <Button
+                // disabled={user?.roles != "ROLE_ADMIN"}
+                variant="ghost"
+                size="icon"
+              >
                 <Pencil size={12} />
                 <span className="sr-only">Modifier</span>
               </Button>
@@ -66,6 +82,8 @@ const ButtonUpdate = <
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
+  ) : (
+    <></>
   );
 };
 

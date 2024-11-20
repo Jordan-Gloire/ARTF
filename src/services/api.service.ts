@@ -6,7 +6,7 @@ import {
   Role,
   UserRoleInterface,
 } from "@/types/app_types";
-import { User } from "next-auth";
+import {  UserInterface } from "next-auth";
 
 export default class ApiService {
   protected endpoint(): string {
@@ -151,7 +151,7 @@ export default class ApiService {
     }
   }
 
-  async getCurrentUser(): Promise<User | undefined> {
+  async getCurrentUser(): Promise<UserInterface | undefined> {
     const session = await getAuthSession();
     return session?.user;
   }
@@ -166,10 +166,10 @@ export default class ApiService {
     return session?.json_code;
   }
 
-  async getServiceCurrentRole(serviceName: string): Promise<Role | undefined> {
-    const session = await getAuthSession();
-    return session?.json_code[serviceName];
-  }
+  // async getServiceCurrentRole(serviceName: string): Promise<Role | undefined> {
+  //   const session = await getAuthSession();
+  //   return session?.json_code[serviceName];
+  // }
 
   async sendRequest({
     method,

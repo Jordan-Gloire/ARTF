@@ -39,7 +39,9 @@ function LoggedIn(props: LoggedInProps) {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm">
             <Avatar className="mr-2 size-6">
-              <AvatarFallback>{props.user?.nom?.[0]}</AvatarFallback>
+              <AvatarFallback className="bg-primary text-primary-foreground">
+                {props.user?.nom?.[0]}
+              </AvatarFallback>
               {props.user?.image && (
                 <AvatarImage
                   src={props.user.image}

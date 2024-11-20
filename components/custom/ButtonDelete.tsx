@@ -44,6 +44,8 @@ const ButtonDelete = <
 
   //   console.log({ dataRow });
 
+  return <></>;
+
   const path = usePathname();
 
   const muatationDelete = useMutation({

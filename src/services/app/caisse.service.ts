@@ -107,11 +107,11 @@ export default class CaisseService extends ApiService {
       body,
       headers,
     });
-  
+
     if (response.ok) {
-      console.log("msgRep", response);
+      // console.log("msgRep", response);
       const rep = await response.json();
-      rep.code = 401;
+      // rep.code = 401;
       return rep;
     } else {
       // Logique supplémentaire dans le cas où response.ok est false
@@ -119,7 +119,7 @@ export default class CaisseService extends ApiService {
       return { code: response.status, message: response.statusText };
     }
   }
-  
+
   async delete_({
     headers,
     id,
@@ -196,7 +196,7 @@ export default class CaisseService extends ApiService {
         classparent: "",
         customclass: "",
         classlabel: "",
-      }, 
+      },
       {
         name: "nom_destinataire",
         label: "Nom destinataire",
@@ -204,7 +204,7 @@ export default class CaisseService extends ApiService {
         classparent: "",
         customclass: "",
         classlabel: "",
-      }, 
+      },
       {
         name: "numero_cni_destinataire",
         label: "Numero CNI Dest",
@@ -212,7 +212,7 @@ export default class CaisseService extends ApiService {
         classparent: "",
         customclass: "",
         classlabel: "",
-      }, 
+      },
       {
         name: "nom_expediteur",
         label: "Nom expéditeur",
@@ -220,7 +220,7 @@ export default class CaisseService extends ApiService {
         classparent: "",
         customclass: "",
         classlabel: "",
-      }, 
+      },
       {
         name: "numero_cni_expediteur",
         label: "Numero CNI Exp",
@@ -228,26 +228,26 @@ export default class CaisseService extends ApiService {
         classparent: "",
         customclass: "",
         classlabel: "",
-      }, 
+      },
       {
         name: "id_user",
         label: "Utilisateurs",
         type: "text",
-        defaultValue : user?.id.toString(),
+        defaultValue: user?.id.toString(),
         // options: ,
         classparent: "hidden",
         customclass: "",
         classlabel: "",
-      }, 
+      },
       {
         name: "statut",
         label: "Statut",
         type: "select",
         options: options.statut,
-        classparent: "",
+        classparent: user?.roles == "ROLE_ADMIN" ? "" : "hidden",
         customclass: "",
         classlabel: "",
-      }, 
+      },
     ];
 
     return form;

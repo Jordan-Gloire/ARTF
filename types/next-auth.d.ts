@@ -5,23 +5,39 @@ import { AdministrationInterface, UserRoleInterface } from "./app_types";
 declare module "next-auth" {
   interface Session {
     token: string;
-    user: User;
+    user: UserInterface;
     administration?: AdministrationInterface;
-    json_code: UserRoleInterface;
+    json_code?: UserRoleInterface;
+    organisation: {
+      id: number;
+      nom: string;
+      sigle: string;
+      uuid: string;
+      created_at: string;
+      updated_at: string;
+    };
   }
 
   interface User {
-    id: string | number;
-    nom: string;
+    token: string;
+    user: UserInterface;
+    administration?: AdministrationInterface;
+    json_code?: UserRoleInterface;
+  }
+
+  interface UserInterface {
+    id: number;
+    roles: "ROLE_USER" | "ROLE_ADMIN";
     telephone: string;
-    fonction?: string | null;
+    nom: string;
     uuid: string;
     image?: string;
     created_at: string;
     updated_at: string;
-    token_type: string;
-    expires_in: number | string;
-    access_token: string;
+    id_organisation: {
+      id: number;
+      nom: string;
+    };
   }
 }
 
@@ -31,8 +47,16 @@ declare module "next-auth/jwt" {
     iat: string;
     exp: string;
     jti: string;
-    user: User;
+    user: UserInterface;
     administration?: AdministrationInterface;
-    json_code: UserRoleInterface;
+    json_code?: UserRoleInterface;
+    organisation: {
+      id: number;
+      nom: string;
+      sigle: string;
+      uuid: string;
+      created_at: string;
+      updated_at: string;
+    };
   }
 }

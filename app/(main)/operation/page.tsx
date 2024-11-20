@@ -13,6 +13,7 @@ export default async function page() {
   const data = await service.getAll({});
   // const data: DefaultAppRowTypeInterface[] = getAll ? getAll.data : [];
   // const data: any[] = [];
+  
 
   return (
     <AppPageTable<any>
